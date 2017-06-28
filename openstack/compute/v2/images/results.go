@@ -1,6 +1,8 @@
 package images
 
 import (
+	"time"
+
 	"github.com/gophercloud/gophercloud"
 	"github.com/gophercloud/gophercloud/pagination"
 )
@@ -28,25 +30,25 @@ func (r GetResult) Extract() (*Image, error) {
 // It provides a description of an OS image.
 type Image struct {
 	// ID contains the image's unique identifier.
-	ID string
-
-	Created string
-
-	// MinDisk and MinRAM specify the minimum resources a server must provide to be able to install the image.
-	MinDisk int
-	MinRAM  int
+	ID string `json:"id"`
 
 	// Name provides a human-readable moniker for the OS image.
-	Name string
+	Name string `json:"name"`
+
+	// Updated and Created contain ISO-8601 timestamps of when the state of the server last changed, and when it was created.
+	Created time.Time `json:"created"`
+	Updated time.Time `json:"updated"`
+
+	// MinDisk and MinRAM specify the minimum resources a server must provide to be able to install the image.
+	MinDisk int `json:"min_disk"`
+	MinRAM  int `json:"min_ram"`
 
 	// The Progress and Status fields indicate image-creation status.
 	// Any usable image will have 100% progress.
-	Progress int
-	Status   string
+	Progress int    `json:"progress"`
+	Status   string `json:"status"`
 
-	Updated string
-
-	Metadata map[string]interface{}
+	Metadata map[string]interface{} `json:"metadata"`
 }
 
 // ImagePage contains a single page of results from a List operation.
